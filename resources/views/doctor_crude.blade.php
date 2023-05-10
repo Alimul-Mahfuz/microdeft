@@ -10,8 +10,11 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <hr>
+        @if (session('msg'))
+            {{-- <span class="alert">{{}}</span> --}}
+        @endif
         <h5>Add Appointment</h5>
         <form action="{{ route('doctor.store') }}" enctype="multipart/form-data" method="post">
             @csrf
@@ -66,7 +69,7 @@
                         <td>{{ $doctor->phone_number }}</td>
                         <td>{{ $doctor->appointment_fee }}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal{{$doctor->id}}"
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal{{$doctor->id}}">
                                 Edit
                             </button>
@@ -82,9 +85,10 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('doctor.store') }}" enctype="multipart/form-data" method="post">
+                                    <form action="{{ route('doctor.update') }}" enctype="multipart/form-data" method="post">
                                         @csrf
                                         <div class="mb-3">
+                                            <input type="text" hidden name="id" value="{{$doctor->id}}" id="">
                                             <input type="text" class="form-control" value="{{ $doctor->doctor_name }}" name="doctor_name"
                                                 id="exampleFormControlInput1" placeholder="doctorname">
                                             @error('doctor_name')
