@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('doctor_name');
             $table->string('doctor_image')->nullable(true);
             $table->string('phone_number');
-            $table->double('appointment_fee');
+            $table->integer('appointment_fee');
             $table->timestamps();
         });
     }

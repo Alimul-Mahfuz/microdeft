@@ -13,51 +13,112 @@
     <div class="container">
         <hr>
         <h5>Add Appointment</h5>
-        <form action="{{route('doctor.store')}}" method="post">
+        <form action="{{ route('doctor.store') }}" enctype="multipart/form-data" method="post">
             @csrf
             <div class="mb-3">
-                <input type="text" class="form-control" name="doctor_name" id="exampleFormControlInput1"
-                    placeholder="doctorname">
+                <input type="text" class="form-control" value="{{ old('doctor_name') }}" name="doctor_name"
+                    id="exampleFormControlInput1" placeholder="doctorname">
+                @error('doctor_name')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="mb-3">
-                <input type="file" class="form-control" placeholder="" name="doctor-image">
+                <input type="file" class="form-control" placeholder="" value="{{ old('doctor_image') }}"
+                    name="doctor_image">
+                @error('doctor_image')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Phone Number" name="phone_number">
+                <input type="text" class="form-control" placeholder="Phone Number" value="{{ old('phone_number') }}"
+                    name="phone_number">
+                @error('phone_number')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Appointment Fee" name="appointment_fee">
+                <input type="text" class="form-control" placeholder="Appointment Fee"
+                    value="{{ old('appointment_fee') }}" name="appointment_fee">
+                @error('appointment_fee')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
-
+        <!-- Button trigger modal -->
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">#SL</th>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Appointment Fee</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                @foreach ($doctors as $key => $doctor)
+                    <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $doctor->doctor_name }}</td>
+                        <td>{{ $doctor->doctor_image }}</td>
+                        <td>{{ $doctor->phone_number }}</td>
+                        <td>{{ $doctor->appointment_fee }}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal{{$doctor->id}}"
+                                data-bs-target="#exampleModal{{$doctor->id}}">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="exampleModal{{$doctor->id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{$doctor->id}}"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('doctor.store') }}" enctype="multipart/form-data" method="post">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" value="{{ $doctor->doctor_name }}" name="doctor_name"
+                                                id="exampleFormControlInput1" placeholder="doctorname">
+                                            @error('doctor_name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="file" class="form-control" placeholder="" value="{{ $doctor->doctor_doctor_image }}"
+                                                name="doctor_image">
+                                            @error('doctor_image')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" placeholder="Phone Number" value="{{ $doctor->phone_number }}"
+                                                name="phone_number">
+                                            @error('phone_number')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" placeholder="Appointment Fee"
+                                                value="{{ $doctor->appointment_fee }}" name="appointment_fee">
+                                            @error('appointment_fee')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -20,4 +20,4 @@ Route::get('/', function () {
 
 // Doctor route
 Route::get('/doctors/index',[DoctorController::class,'index'])->name('doctor.index');
-Route::get('/doctors/store',[DoctorController::class,'store'])->name('doctor.store');
+Route::post('/doctors/store',[DoctorController::class,'store'])->name('doctor.store');
