@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DoctorController extends Controller
 {
     //
-    function index(){
+    function index():View
+    {
         $doctors=Doctor::all();
         return view ('doctor_crude',compact('doctors'));
     }
 
-    function store(Request $request){
+    function store(Request $request):RedirectResponse
+    {
         $this->validate($request,[
             'doctor_name'=>'required',
             'phone_number'=>'required',
@@ -28,7 +32,8 @@ class DoctorController extends Controller
         $doctor->save();
         return redirect()->back()->with('msg','Data added successfully!!');
     }
-    function update(Request $request){
+    function update(Request $request):RedirectResponse
+    {
         $this->validate($request,[
             'doctor_name'=>'required',
             'phone_number'=>'required',
@@ -44,7 +49,8 @@ class DoctorController extends Controller
         return redirect()->back()->with('msg','Data added successfully!!');
     }
 
-    function destroy($id){
+    function destroy($id):RedirectResponse
+    {
         $doctor=Doctor::find($id);
         $doctor->delete();
         return redirect()->back()->with('msg','Data deleted successfully!!');
