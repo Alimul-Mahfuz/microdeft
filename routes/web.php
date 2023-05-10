@@ -22,3 +22,4 @@ Route::get('/', function () {
 Route::get('/doctors/index',[DoctorController::class,'index'])->name('doctor.index');
 Route::post('/doctors/store',[DoctorController::class,'store'])->name('doctor.store');
 Route::post('/doctors/update',[DoctorController::class,'update'])->name('doctor.update');
+Route::any('/doctors/destroy/{id}',[DoctorController::class,'destroy'])->name('doctor.destroy');

@@ -43,4 +43,10 @@ class DoctorController extends Controller
         $doctor->save();
         return redirect()->back()->with('msg','Data added successfully!!');
     }
+
+    function destroy($id){
+        $doctor=Doctor::find($id);
+        $doctor->delete();
+        return redirect()->back()->with('msg','Data deleted successfully!!');
+    }
 }

@@ -70,13 +70,18 @@
                         <td>{{ $doctor->appointment_fee }}</td>
                         <td>
                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal{{$doctor->id}}">
+                                data-bs-target="#exampleModal{{ $doctor->id }}">
                                 Edit
                             </button>
+                            <a href="{{route('doctor.destroy',['id'=>$doctor->id])}}">
+                                <button type="button" class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                            </a>
                         </td>
                     </tr>
-                    <div class="modal fade" id="exampleModal{{$doctor->id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{$doctor->id}}"
-                        aria-hidden="true">
+                    <div class="modal fade" id="exampleModal{{ $doctor->id }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel{{ $doctor->id }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -85,26 +90,29 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('doctor.update') }}" enctype="multipart/form-data" method="post">
+                                    <form action="{{ route('doctor.update') }}" enctype="multipart/form-data"
+                                        method="post">
                                         @csrf
                                         <div class="mb-3">
-                                            <input type="text" hidden name="id" value="{{$doctor->id}}" id="">
-                                            <input type="text" class="form-control" value="{{ $doctor->doctor_name }}" name="doctor_name"
+                                            <input type="text" hidden name="id" value="{{ $doctor->id }}"
+                                                id="">
+                                            <input type="text" class="form-control"
+                                                value="{{ $doctor->doctor_name }}" name="doctor_name"
                                                 id="exampleFormControlInput1" placeholder="doctorname">
                                             @error('doctor_name')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <input type="file" class="form-control" placeholder="" value="{{ $doctor->doctor_doctor_image }}"
-                                                name="doctor_image">
+                                            <input type="file" class="form-control" placeholder=""
+                                                value="{{ $doctor->doctor_doctor_image }}" name="doctor_image">
                                             @error('doctor_image')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Phone Number" value="{{ $doctor->phone_number }}"
-                                                name="phone_number">
+                                            <input type="text" class="form-control" placeholder="Phone Number"
+                                                value="{{ $doctor->phone_number }}" name="phone_number">
                                             @error('phone_number')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
